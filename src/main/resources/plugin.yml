@@ -1,0 +1,6 @@
+name: ShootingGallery
+version: '${version}'
+main: run.tere.plugin.shootinggallery.ShootingGallery
+api-version: 1.16
+authors: [ tererun ]
+description: ShootingGallery
