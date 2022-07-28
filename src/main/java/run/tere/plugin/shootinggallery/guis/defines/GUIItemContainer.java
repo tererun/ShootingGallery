@@ -7,6 +7,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import run.tere.plugin.shootinggallery.ShootingGallery;
+import run.tere.plugin.shootinggallery.defines.GameStall;
 import run.tere.plugin.shootinggallery.utils.ItemStackUtil;
 
 import java.util.Collections;
@@ -67,14 +68,29 @@ public class GUIItemContainer {
         ), GUI_CONTROL_ITEM_KEY, "changePrizeItem");
     }
 
+    public static ItemStack getFromSelectItem() {
+        return fromSelectItem.clone();
+    }
 
+    public static ItemStack getToSelectItem() {
+        return toSelectItem.clone();
+    }
 
-    public static String getItemKey(ItemStack itemStack, NamespacedKey namespacedKey) {
-        if (itemStack == null || !itemStack.hasItemMeta()) return null;
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        PersistentDataContainer persistentDataContainer = itemMeta.getPersistentDataContainer();
-        if (!persistentDataContainer.has(namespacedKey, PersistentDataType.STRING)) return null;
-        return persistentDataContainer.get(namespacedKey, PersistentDataType.STRING);
+    public static ItemStack getDeleteSelectItem() {
+        return deleteSelectItem.clone();
+    }
+
+    public static ItemStack getCreateSelectItem() {
+        return createSelectItem.clone();
+    }
+
+    public static ItemStack getChangePrizeItem() {
+        return changePrizeItem.clone();
+    }
+
+    public static ItemStack createGameStallItem(GameStall gameStall) {
+        ItemStack itemStack = ItemStackUtil.createItemStack(Material.WHITE_BANNER, 1, gameStall.getName(), null, -1);
+        return ItemStackUtil.addItemTag(itemStack, GUI_STALL_ITEM_KEY, gameStall.getUUID().toString());
     }
 
 }
