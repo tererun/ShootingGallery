@@ -32,6 +32,11 @@ public class GameStall {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+        this.save();
+    }
+
     public Location fromLocation() {
         return JsonLocation.toBukkitLocation(fromLocation);
     }

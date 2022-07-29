@@ -3,27 +3,25 @@ package run.tere.plugin.shootinggallery.guis.holders;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import run.tere.plugin.shootinggallery.defines.GamePrize;
 import run.tere.plugin.shootinggallery.defines.GameStall;
-import java.util.List;
+import run.tere.plugin.shootinggallery.guis.defines.GUIItemContainer;
 
-public class GamePrizeListHolder implements InventoryHolder {
+public class GameStallHolder implements InventoryHolder {
 
     private GameStall gameStall;
     private Inventory inventory;
 
-    public GamePrizeListHolder(GameStall gameStall) {
+    public GameStallHolder(GameStall gameStall) {
         this.gameStall = gameStall;
-        this.inventory = Bukkit.createInventory(this, 54, gameStall.getName());
+        this.inventory = Bukkit.createInventory(this, 9, gameStall.getName());
         this.initInventory();
     }
 
     private void initInventory() {
-        List<GamePrize> gamePrizes = gameStall.getPrizes();
-        for (int i = 0; i < gamePrizes.size(); i++) {
-            GamePrize gamePrize = gamePrizes.get(i);
-            inventory.setItem(i, gamePrize.getPrizeItem());
-        }
+        inventory.setItem(1, GUIItemContainer.getFromSelectItem());
+        inventory.setItem(3, GUIItemContainer.getToSelectItem());
+        inventory.setItem(5, GUIItemContainer.getChangeStallNameItem());
+        inventory.setItem(7, GUIItemContainer.getDeleteSelectItem());
     }
 
     public GameStall getGameStall() {
@@ -36,4 +34,3 @@ public class GamePrizeListHolder implements InventoryHolder {
     }
 
 }
-

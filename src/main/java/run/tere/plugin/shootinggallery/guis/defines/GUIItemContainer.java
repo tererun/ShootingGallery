@@ -22,6 +22,7 @@ public class GUIItemContainer {
     private static ItemStack deleteSelectItem;
     private static ItemStack createSelectItem;
     private static ItemStack changePrizeItem;
+    private static ItemStack changeStallNameItem;
 
     static {
         GUI_CONTROL_ITEM_KEY = new NamespacedKey(ShootingGallery.getInstance(), "guiControlItemKey");
@@ -62,8 +63,16 @@ public class GUIItemContainer {
         changePrizeItem = ItemStackUtil.addItemTag(ItemStackUtil.createItemStack(
                 Material.CHEST,
                 1,
-                "§d景品を変更§l",
+                "§d§l景品を変更",
                 Collections.singletonList("§eクリックで景品を変更"),
+                -1
+        ), GUI_CONTROL_ITEM_KEY, "changePrizeItem");
+
+        changeStallNameItem = ItemStackUtil.addItemTag(ItemStackUtil.createItemStack(
+                Material.NAME_TAG,
+                1,
+                "§9§l屋台名称を変更",
+                Collections.singletonList("§eクリックで名称を変更"),
                 -1
         ), GUI_CONTROL_ITEM_KEY, "changePrizeItem");
     }
@@ -86,6 +95,10 @@ public class GUIItemContainer {
 
     public static ItemStack getChangePrizeItem() {
         return changePrizeItem.clone();
+    }
+
+    public static ItemStack getChangeStallNameItem() {
+        return changeStallNameItem.clone();
     }
 
     public static ItemStack createGameStallItem(GameStall gameStall) {

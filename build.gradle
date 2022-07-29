@@ -25,10 +25,12 @@ repositories {
 dependencies {
     compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.16.5-R0.1-SNAPSHOT'
     implementation group: 'de.tr7zw', name: 'item-nbt-api-plugin', version: '2.10.0'
+    implementation group: 'net.wesjd', name: 'anvilgui', version: '1.5.3-SNAPSHOT'
 }
 
 shadowJar {
-    relocate 'de.tr7zw.changeme.nbtapi', 'run.tere.plugin.shootinggallery.relocate'
+    relocate 'de.tr7zw.changeme.nbtapi', 'run.tere.plugin.shootinggallery.relocate.nbtapi'
+    relocate 'net.wesjd.anvilgui', 'run.tere.plugin.shootinggallery.relocate.anvilgui'
 }
 
 def targetJavaVersion = 8
