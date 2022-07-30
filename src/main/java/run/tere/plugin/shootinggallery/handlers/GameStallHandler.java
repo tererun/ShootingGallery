@@ -29,6 +29,10 @@ public class GameStallHandler {
         return gameStalls;
     }
 
+    public void save() {
+        saveGameStallHandler(this);
+    }
+
     public static void saveGameStallHandler(GameStallHandler gameStallHandler) {
         JsonUtil.toJson(ShootingGallery.getInstance(), gameStallHandler, "gameStallHandler.json");
     }

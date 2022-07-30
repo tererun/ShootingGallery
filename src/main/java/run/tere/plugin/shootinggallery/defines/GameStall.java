@@ -55,6 +55,11 @@ public class GameStall {
         this.save();
     }
 
+    public void setPrizes(List<GamePrize> prizes) {
+        this.prizes = prizes;
+        save();
+    }
+
     public List<GamePrize> getPrizes() {
         return prizes;
     }

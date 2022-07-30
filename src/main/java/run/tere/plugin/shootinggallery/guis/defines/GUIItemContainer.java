@@ -24,6 +24,8 @@ public class GUIItemContainer {
     private static ItemStack changePrizeItem;
     private static ItemStack changeStallNameItem;
 
+    private static ItemStack spawnClerkItem;
+
     static {
         GUI_CONTROL_ITEM_KEY = new NamespacedKey(ShootingGallery.getInstance(), "guiControlItemKey");
         GUI_STALL_ITEM_KEY = new NamespacedKey(ShootingGallery.getInstance(), "guiStallItemKey");
@@ -74,7 +76,15 @@ public class GUIItemContainer {
                 "§9§l屋台名称を変更",
                 Collections.singletonList("§eクリックで名称を変更"),
                 -1
-        ), GUI_CONTROL_ITEM_KEY, "changePrizeItem");
+        ), GUI_CONTROL_ITEM_KEY, "changeStallNameItem");
+
+        spawnClerkItem = ItemStackUtil.addItemTag(ItemStackUtil.createItemStack(
+                Material.VILLAGER_SPAWN_EGG,
+                1,
+                "§b§l店員をスポーン",
+                Collections.singletonList("§eクリックで店員をスポーン"),
+                -1
+        ), GUI_CONTROL_ITEM_KEY, "spawnClerkItem");
     }
 
     public static ItemStack getFromSelectItem() {
@@ -99,6 +109,10 @@ public class GUIItemContainer {
 
     public static ItemStack getChangeStallNameItem() {
         return changeStallNameItem.clone();
+    }
+
+    public static ItemStack getSpawnClerkItem() {
+        return spawnClerkItem.clone();
     }
 
     public static ItemStack createGameStallItem(GameStall gameStall) {
