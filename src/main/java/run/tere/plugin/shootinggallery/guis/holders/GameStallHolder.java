@@ -18,11 +18,14 @@ public class GameStallHolder implements InventoryHolder {
     }
 
     private void initInventory() {
-        inventory.setItem(0, GUIItemContainer.getFromSelectItem());
-        inventory.setItem(2, GUIItemContainer.getToSelectItem());
-        inventory.setItem(4, GUIItemContainer.getChangePrizeItem());
-        inventory.setItem(6, GUIItemContainer.getChangeStallNameItem());
-        inventory.setItem(8, GUIItemContainer.getDeleteSelectItem());
+        inventory.addItem(
+                GUIItemContainer.getFromSelectItem(),
+                GUIItemContainer.getToSelectItem(),
+                GUIItemContainer.getChangePrizeItem(),
+                GUIItemContainer.getChangeStallNameItem(),
+                GUIItemContainer.getSpawnClerkItem(),
+                GUIItemContainer.getDeleteSelectItem()
+        );
     }
 
     public GameStall getGameStall() {

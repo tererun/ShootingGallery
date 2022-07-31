@@ -39,7 +39,11 @@ public class GameStallHandler {
 
     public static GameStallHandler loadGameStallHandler() {
         GameStallHandler gameStallHandler = (GameStallHandler) JsonUtil.fromJson(ShootingGallery.getInstance(), "gameStallHandler.json", GameStallHandler.class);
-        return gameStallHandler == null ? new GameStallHandler() : gameStallHandler;
+        if (gameStallHandler == null) {
+            gameStallHandler = new GameStallHandler();
+            saveGameStallHandler(gameStallHandler);
+        }
+        return gameStallHandler;
     }
 
 }

@@ -1,29 +1,24 @@
 package run.tere.plugin.shootinggallery.defines;
 
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class GameStallStatus {
 
     private UUID uuid;
-    private Player nowPlaying;
+    private List<ArmorStand> prizeStands;
 
     public GameStallStatus(UUID uuid) {
         this.uuid = uuid;
-        this.nowPlaying = null;
+        this.prizeStands = new ArrayList<>();
     }
 
     public UUID getUUID() {
         return uuid;
-    }
-
-    public Player getNowPlaying() {
-        return nowPlaying;
-    }
-
-    public void setNowPlaying(Player nowPlaying) {
-        this.nowPlaying = nowPlaying;
     }
 
 }
