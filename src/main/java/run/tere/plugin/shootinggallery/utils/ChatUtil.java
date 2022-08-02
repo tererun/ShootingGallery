@@ -10,4 +10,8 @@ public class ChatUtil {
         commandSender.sendMessage(PREFIX + message);
     }
 
+    public static void sendClerkMessage(CommandSender commandSender, String message) {
+        commandSender.sendMessage("§f射的屋台のおっちゃん§a: §r" + message);
+    }
+
 }

@@ -22,27 +22,14 @@ public class ShootingGalleryMainListener implements Listener {
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
         Player player = e.getPlayer();
-        ItemStack handItem = player.getInventory().getItem(player.getInventory().getHeldItemSlot());
+
         Entity rightClickedEntity = e.getRightClicked();
         UUID gameStallUUID = GameStallUtil.getGameStallUUID(rightClickedEntity);
         GameStallStatusHandler gameStallStatusHandler = ShootingGallery.getInstance().getGameStallStatusHandler();
         if (gameStallUUID == null) return;
         GameStallStatus gameStallStatus = gameStallStatusHandler.getGameStallStatus(gameStallUUID);
         if (gameStallStatus == null) return;
-        if (handItem == null) return;
-        Material handItemType = handItem.getType();
-        if (handItemType == Material.IRON_NUGGET) {
 
-        } else if (handItemType == Material.GOLD_NUGGET) {
-
-        } else {
-
-        }
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e) {
-        Player player = e.getPlayer();
     }
 
 }
