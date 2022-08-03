@@ -28,15 +28,6 @@ public class GameStallStatusHandler {
         return null;
     }
 
-    public GameStallStatus getGameStallStatus(Player player) {
-        for (GameStallStatus gameStallStatus : gameStallStatuses) {
-            if (gameStallStatus.getNowPlaying().equals(player)) {
-                return gameStallStatus;
-            }
-        }
-        return null;
-    }
-
     public List<GameStallStatus> getGameStallStatuses() {
         return gameStallStatuses;
     }

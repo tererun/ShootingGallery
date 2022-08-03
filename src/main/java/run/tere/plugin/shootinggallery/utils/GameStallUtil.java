@@ -61,6 +61,8 @@ public class GameStallUtil {
             ChatUtil.sendClerkMessage(player, "§c通貨を持ちながら話しかけたら弓矢渡すで!");
             return;
         }
+        handItem.setAmount(handItem.getAmount() - 1);
+        SoundUtil.playPurchaseSound(player);
         ChatUtil.sendClerkMessage(player, "§aまいどあり! 頑張って当ててくれよ〜");
     }
 
