@@ -30,9 +30,8 @@ public class JsonUtil {
             Gson gson = new Gson();
             return gson.fromJson(reader, typeOfT);
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
 }

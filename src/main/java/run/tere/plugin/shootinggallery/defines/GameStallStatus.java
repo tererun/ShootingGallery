@@ -1,24 +1,34 @@
 package run.tere.plugin.shootinggallery.defines;
 
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class GameStallStatus {
 
-    private UUID uuid;
-    private List<ArmorStand> prizeStands;
+    private GameStall gameStall;
+    private List<ArmorStandGamePrize> armorStandGamePrizes;
 
-    public GameStallStatus(UUID uuid) {
-        this.uuid = uuid;
-        this.prizeStands = new ArrayList<>();
+    public GameStallStatus(GameStall gameStall) {
+        this.gameStall = gameStall;
+        this.armorStandGamePrizes = new ArrayList<>();
     }
 
-    public UUID getUUID() {
-        return uuid;
+    public ArmorStandGamePrize getArmorStandGamePrize(UUID armorStandUUID) {
+        for (ArmorStandGamePrize armorStandGamePrize : armorStandGamePrizes) {
+            if (armorStandGamePrize.getPrizeStand().getUniqueId().equals(armorStandUUID)) {
+                return armorStandGamePrize;
+            }
+        }
+        return null;
+    }
+
+    public List<ArmorStandGamePrize> getArmorStandGamePrizes() {
+        return armorStandGamePrizes;
+    }
+
+    public GameStall getGameStall() {
+        return gameStall;
     }
 
 }

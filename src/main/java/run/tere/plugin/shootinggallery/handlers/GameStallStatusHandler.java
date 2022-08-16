@@ -15,13 +15,13 @@ public class GameStallStatusHandler {
     public GameStallStatusHandler(GameStallHandler gameStallHandler) {
         this.gameStallStatuses = new ArrayList<>();
         for (GameStall gameStall : gameStallHandler.getGameStalls()) {
-            this.gameStallStatuses.add(new GameStallStatus(gameStall.getUUID()));
+            this.gameStallStatuses.add(new GameStallStatus(gameStall));
         }
     }
 
     public GameStallStatus getGameStallStatus(UUID uuid) {
         for (GameStallStatus gameStallStatus : gameStallStatuses) {
-            if (gameStallStatus.getUUID().equals(uuid)) {
+            if (gameStallStatus.getGameStall().getUUID().equals(uuid)) {
                 return gameStallStatus;
             }
         }

@@ -4,3 +4,6 @@ main: run.tere.plugin.shootinggallery.ShootingGallery
 api-version: 1.16
 authors: [ tererun ]
 description: ShootingGallery
+commands:
+  sg:
+    description: shooting gallery main command

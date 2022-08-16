@@ -66,7 +66,7 @@ public class GUIHandler implements Listener {
                 gameStallHandler.getGameStalls().remove(gameStall);
                 gameStallHandler.save();
                 ChatUtil.sendMessage(player, "§a屋台を削除しました!");
-            } else if (itemTag.equalsIgnoreCase("changePrizeNameItem")) {
+            } else if (itemTag.equalsIgnoreCase("changeStallNameItem")) {
                 new AnvilGUI.Builder()
                         .onComplete((anvilPlayer, text) -> {
                             gameStall.setName(text);
