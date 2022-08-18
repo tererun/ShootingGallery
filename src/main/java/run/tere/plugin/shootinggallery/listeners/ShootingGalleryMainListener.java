@@ -1,18 +1,26 @@
 package run.tere.plugin.shootinggallery.listeners;
 
-import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
+import run.tere.plugin.shootinggallery.ShootingGallery;
 import run.tere.plugin.shootinggallery.defines.ArmorStandGamePrize;
+import run.tere.plugin.shootinggallery.defines.GameStallStatus;
 import run.tere.plugin.shootinggallery.defines.ItemContainer;
+import run.tere.plugin.shootinggallery.utils.ChatUtil;
 import run.tere.plugin.shootinggallery.utils.GameStallUtil;
 import run.tere.plugin.shootinggallery.utils.ItemStackUtil;
 
@@ -34,6 +42,7 @@ public class ShootingGalleryMainListener implements Listener {
         Entity damaged = e.getEntity();
         if (!damaged.getPersistentDataContainer().has(ArmorStandGamePrize.ARMOR_STAND_GAME_PRIZE_KEY, PersistentDataType.STRING)) return;
         if (e.getCause() == EntityDamageEvent.DamageCause.VOID) return;
+        UUID stallUUID = UUID.fromString(damaged.getPersistentDataContainer().get(ArmorStandGamePrize.ARMOR_STAND_GAME_PRIZE_KEY, PersistentDataType.STRING));
         e.setCancelled(true);
         if (e instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent entityDamageByEntityEvent = (EntityDamageByEntityEvent) e;
@@ -44,7 +53,13 @@ public class ShootingGalleryMainListener implements Listener {
             if (!arrow.getPersistentDataContainer().has(ItemContainer.shootingArrowEntityKey, PersistentDataType.STRING)) return;
             if (!(projectileSource instanceof Player)) return;
             Player shooter = (Player) projectileSource;
-
+            GameStallStatus gameStallStatus = ShootingGallery.getInstance().getGameStallStatusHandler().getGameStallStatus(stallUUID);
+            if (gameStallStatus == null) return;
+            ArmorStandGamePrize armorStandGamePrize = gameStallStatus.getArmorStandGamePrize(damaged.getUniqueId());
+            shooter.getInventory().addItem(armorStandGamePrize.getPrizeStack());
+            shooter.getWorld().playSound(shooter.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1F, 2F);
+            ChatUtil.sendMessage(shooter, "§a景品ゲット!");
+            gameStallStatus.remove(armorStandGamePrize);
         }
     }
 

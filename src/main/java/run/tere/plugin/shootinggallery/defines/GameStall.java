@@ -37,11 +37,11 @@ public class GameStall {
         this.save();
     }
 
-    public Location fromLocation() {
+    public Location getFromLocation() {
         return JsonLocation.toBukkitLocation(fromLocation);
     }
 
-    public Location toLocation() {
+    public Location getToLocation() {
         return JsonLocation.toBukkitLocation(toLocation);
     }
 

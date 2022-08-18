@@ -13,6 +13,7 @@ public class ArmorStandGamePrize {
     private GameStallStatus gameStallStatus;
     private ItemStack prizeStack;
     private ArmorStand prizeStand;
+    private boolean going;
 
     public ArmorStandGamePrize(GameStallStatus gameStallStatus, ItemStack prizeStack, Location startLocation) {
         this.gameStallStatus = gameStallStatus;
@@ -23,6 +24,7 @@ public class ArmorStandGamePrize {
             armorStand.getEquipment().setHelmet(prizeStack.clone());
             armorStand.getPersistentDataContainer().set(ARMOR_STAND_GAME_PRIZE_KEY, PersistentDataType.STRING, gameStallStatus.getGameStall().getUUID().toString());
         });
+        this.going = true;
     }
 
     public GameStallStatus getGameStallStatus() {
@@ -35,6 +37,14 @@ public class ArmorStandGamePrize {
 
     public ArmorStand getPrizeStand() {
         return prizeStand;
+    }
+
+    public boolean isGoing() {
+        return going;
+    }
+
+    public void setGoing(boolean going) {
+        this.going = going;
     }
 
 }

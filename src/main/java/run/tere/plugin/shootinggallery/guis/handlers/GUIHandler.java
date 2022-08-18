@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import run.tere.plugin.shootinggallery.ShootingGallery;
 import run.tere.plugin.shootinggallery.defines.GamePrize;
 import run.tere.plugin.shootinggallery.defines.GameStall;
+import run.tere.plugin.shootinggallery.defines.GameStallStatus;
 import run.tere.plugin.shootinggallery.guis.defines.GUIContainer;
 import run.tere.plugin.shootinggallery.guis.defines.GUIItemContainer;
 import run.tere.plugin.shootinggallery.guis.holders.GamePrizeListHolder;
@@ -35,7 +36,7 @@ public class GUIHandler implements Listener {
     public GUIHandler() {
         Bukkit.getServer().getPluginManager().registerEvents(this, ShootingGallery.getInstance());
     }
-
+    
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
@@ -110,11 +111,13 @@ public class GUIHandler implements Listener {
         if (closedInventoryHolder instanceof GamePrizeListHolder) {
             GamePrizeListHolder gamePrizeListHolder = (GamePrizeListHolder) closedInventoryHolder;
             GameStall gameStall = gamePrizeListHolder.getGameStall();
+            GameStallStatus gameStallStatus = ShootingGallery.getInstance().getGameStallStatusHandler().getGameStallStatus(gameStall.getUUID());
             List<GamePrize> gamePrizeList = new ArrayList<>();
             for (ItemStack itemStack : closedInventory.getContents()) {
                 if (itemStack != null) gamePrizeList.add(new GamePrize(itemStack));
             }
             gameStall.setPrizes(gamePrizeList);
+            gameStallStatus.reset();
             ChatUtil.sendMessage(player, "§aアイテムを設定しました!");
         }
     }

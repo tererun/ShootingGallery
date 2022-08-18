@@ -19,7 +19,7 @@ public class ItemContainer {
 
     static {
         itemContainerKey = new NamespacedKey(ShootingGallery.getInstance(), "itemContainerKey");
-        itemContainerKey = new NamespacedKey(ShootingGallery.getInstance(), "shootingArrowEntityKey");
+        shootingArrowEntityKey = new NamespacedKey(ShootingGallery.getInstance(), "shootingArrowEntityKey");
 
         bowItem = ItemStackUtil.addItemTag(
                 ItemStackUtil.createItemStack(

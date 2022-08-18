@@ -68,7 +68,7 @@ public class GUIItemContainer {
                 "§d§l景品を変更",
                 Collections.singletonList("§eクリックで景品を変更"),
                 -1
-        ), GUI_CONTROL_ITEM_KEY, "");
+        ), GUI_CONTROL_ITEM_KEY, "changePrizeItem");
 
         changeStallNameItem = ItemStackUtil.addItemTag(ItemStackUtil.createItemStack(
                 Material.NAME_TAG,

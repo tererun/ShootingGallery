@@ -4,10 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import run.tere.plugin.shootinggallery.commands.ShootingGalleryMainCommand;
+import run.tere.plugin.shootinggallery.defines.GameStallStatus;
 import run.tere.plugin.shootinggallery.guis.handlers.GUIHandler;
 import run.tere.plugin.shootinggallery.handlers.GameStallHandler;
 import run.tere.plugin.shootinggallery.handlers.GameStallStatusHandler;
 import run.tere.plugin.shootinggallery.listeners.ShootingGalleryMainListener;
+import run.tere.plugin.shootinggallery.schedulers.ArmorStandGamePrizeScheduler;
 
 public final class ShootingGallery extends JavaPlugin {
 
@@ -15,6 +17,7 @@ public final class ShootingGallery extends JavaPlugin {
 
     private GameStallHandler gameStallHandler;
     private GameStallStatusHandler gameStallStatusHandler;
+    private ArmorStandGamePrizeScheduler armorStandGamePrizeScheduler;
     private GUIHandler guiHandler;
 
     @Override
@@ -24,10 +27,20 @@ public final class ShootingGallery extends JavaPlugin {
 
         gameStallHandler = GameStallHandler.loadGameStallHandler();
         gameStallStatusHandler = new GameStallStatusHandler(gameStallHandler);
+        armorStandGamePrizeScheduler = new ArmorStandGamePrizeScheduler();
         guiHandler = new GUIHandler();
+
+        armorStandGamePrizeScheduler.runTaskTimer(this, 0L, 1L);
 
         registerCommands();
         registerEvents();
+    }
+
+    @Override
+    public void onDisable() {
+        for (GameStallStatus gameStallStatus : gameStallStatusHandler.getGameStallStatuses()) {
+            gameStallStatus.removeAll();
+        }
     }
 
     private void registerCommands() {
@@ -52,6 +65,10 @@ public final class ShootingGallery extends JavaPlugin {
 
     public GameStallStatusHandler getGameStallStatusHandler() {
         return gameStallStatusHandler;
+    }
+
+    public ArmorStandGamePrizeScheduler getArmorStandGamePrizeScheduler() {
+        return armorStandGamePrizeScheduler;
     }
 
     public GameStallHandler getGameStallHandler() {
