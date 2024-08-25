@@ -103,6 +103,7 @@ public class GUIHandler implements Listener {
                     GameStall gameStall = new GameStall("新規屋台");
                     gameStallHandler.getGameStalls().add(gameStall);
                     gameStallHandler.save();
+                    ShootingGallery.getInstance().getGameStallStatusHandler().getGameStallStatuses().add(new GameStallStatus(gameStall));
                     ChatUtil.sendMessage(player, "§a屋台を作成しました!");
                 }
             } else if (guiStallItemTag != null) {

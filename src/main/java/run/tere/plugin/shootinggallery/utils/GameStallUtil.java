@@ -49,7 +49,7 @@ public class GameStallUtil {
 
         ItemMeta handItemMeta = handItem.getItemMeta();
         Material handItemType = handItem.getType();
-        if (!handItemMeta.hasCustomModelData() || handItemMeta.getCustomModelData() != 2) {
+        if (!handItemMeta.hasCustomModelData() || handItemMeta.getCustomModelData() != 1) {
             ChatUtil.sendClerkMessage(player, "§c通貨を持ちながら話しかけたら弓矢渡すで!");
             return;
         }

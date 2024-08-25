@@ -17,6 +17,7 @@ public class ArmorStandGamePrizeScheduler extends BukkitRunnable {
     public void run() {
         for (GameStallStatus gameStallStatus : ShootingGallery.getInstance().getGameStallStatusHandler().getGameStallStatuses()) {
             GameStall gameStall = gameStallStatus.getGameStall();
+            if (gameStall.getFromJsonLocation() == null || gameStall.getToJsonLocation() == null) continue;
             Location fromLocation = gameStall.getFromLocation();
             Location toLocation = gameStall.getToLocation();
             Vector direction = fromLocation.toVector().clone().subtract(toLocation.toVector().clone()).normalize();
