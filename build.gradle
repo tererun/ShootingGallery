@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'run.tere.plugin'
-version = 'Patch-1.0.0'
+version = 'Patch-1.0.1'
 
 repositories {
     mavenCentral()
@@ -13,19 +13,14 @@ repositories {
         url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
     }
     maven {
-        name = 'sonatype'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
-    maven {
         name = 'CodeMC'
         url = 'https://repo.codemc.org/repository/maven-public/'
     }
 }
 
 dependencies {
-    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.16.5-R0.1-SNAPSHOT'
-    implementation group: 'de.tr7zw', name: 'item-nbt-api-plugin', version: '2.10.0'
-    implementation group: 'net.wesjd', name: 'anvilgui', version: '1.5.3-SNAPSHOT'
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version: '1.20.4-R0.1-SNAPSHOT'
+    implementation group: 'de.tr7zw', name: 'item-nbt-api-plugin', version: '2.13.2'
 }
 
 shadowJar {
@@ -33,7 +28,7 @@ shadowJar {
     relocate 'net.wesjd.anvilgui', 'run.tere.plugin.shootinggallery.relocate.anvilgui'
 }
 
-def targetJavaVersion = 8
+def targetJavaVersion = 17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -44,8 +39,10 @@ java {
 }
 
 tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release = targetJavaVersion
+        options.release.set(targetJavaVersion)
     }
 }
 
@@ -56,8 +53,4 @@ processResources {
     filesMatching('plugin.yml') {
         expand props
     }
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
 }

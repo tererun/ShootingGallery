@@ -1,17 +1,17 @@
 package run.tere.plugin.shootinggallery.guis.handlers;
 
-import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 import run.tere.plugin.shootinggallery.ShootingGallery;
 import run.tere.plugin.shootinggallery.defines.GamePrize;
 import run.tere.plugin.shootinggallery.defines.GameStall;
@@ -27,16 +27,30 @@ import run.tere.plugin.shootinggallery.utils.GameStallUtil;
 import run.tere.plugin.shootinggallery.utils.InventoryUtil;
 import run.tere.plugin.shootinggallery.utils.ItemStackUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class GUIHandler implements Listener {
 
     public GUIHandler() {
         Bukkit.getServer().getPluginManager().registerEvents(this, ShootingGallery.getInstance());
     }
-    
+    private Map<UUID, BukkitTask> listeningPlayers = new HashMap<>();
+    private Map<UUID, GameStall> listeningPlayerGameStalls = new HashMap<>();
+
+    @EventHandler
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent e) {
+        if (listeningPlayers.containsKey(e.getPlayer().getUniqueId())) {
+            e.setCancelled(true);
+            BukkitTask task = listeningPlayers.get(e.getPlayer().getUniqueId());
+            task.cancel();
+            listeningPlayers.remove(e.getPlayer().getUniqueId());
+            String message = e.getMessage();
+            listeningPlayerGameStalls.get(e.getPlayer().getUniqueId()).setName(message);
+            listeningPlayerGameStalls.remove(e.getPlayer().getUniqueId());
+            ChatUtil.sendMessage(e.getPlayer(), "§a名称を変更しました!");
+        }
+    }
+
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
@@ -68,17 +82,13 @@ public class GUIHandler implements Listener {
                 gameStallHandler.save();
                 ChatUtil.sendMessage(player, "§a屋台を削除しました!");
             } else if (itemTag.equalsIgnoreCase("changeStallNameItem")) {
-                new AnvilGUI.Builder()
-                        .onComplete((anvilPlayer, text) -> {
-                            gameStall.setName(text);
-                            ChatUtil.sendMessage(anvilPlayer, "§a名称を変更しました!");
-                            return AnvilGUI.Response.close();
-                        })
-                        .text("屋台名をここに入力")
-                        .itemLeft(new ItemStack(Material.NAME_TAG))
-                        .title("名称を入力してください")
-                        .plugin(ShootingGallery.getInstance())
-                        .open(player);
+                listeningPlayers.put(player.getUniqueId(), Bukkit.getScheduler().runTaskLater(ShootingGallery.getInstance(), () -> {
+                    listeningPlayers.remove(player.getUniqueId());
+                    listeningPlayerGameStalls.remove(player.getUniqueId());
+                    ChatUtil.sendMessage(player, "§c名称入力がタイムアウトしました");
+                }, 20 * 30));
+                listeningPlayerGameStalls.put(player.getUniqueId(), gameStall);
+                ChatUtil.sendMessage(player, "§a名称を入力してください!(チャットに30秒以内で入力してください)");
             } else if (itemTag.equalsIgnoreCase("spawnClerkItem")) {
                 InventoryUtil.closeInventory(player);
                 GameStallUtil.spawnGameStallClerk(playerLocation, gameStall);
